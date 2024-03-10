@@ -8,36 +8,6 @@ right=0
 up=0
 down=0
 
-p_left=0
-p_right=0
-p_up=0
-p_down=0
-
-def update():
-    global left, right, up, down
-
-    if left and right:
-        left, right = 0,0
-    if up and down:
-        up, down = 0,0
-    
-    if left == 0 and right == 0 and up == 0 and down == 0:
-        send(STOP)
-    else:
-        if right and down:
-            send(RIGHT_DOWN)
-        elif left and down:
-            send(LEFT_DOWN)
-        elif right and up:
-            send(RIGHT_UP)
-        elif left and up:
-            send(LEFT_UP)
-        else:
-            if left: send(LEFT)
-            if right: send(RIGHT)
-            if up: send(UP)
-            if down: send(DOWN)
-
 def on_press(key):
     global left, right, up, down
     if str(key).replace("'", "") == "q":
@@ -47,32 +17,32 @@ def on_press(key):
     match str(key).replace("'", ""):
         case "Key.right":
             right = 1
-            update()
+            send_bool(left, right, up, down)
         case "Key.left":
             left = 1
-            update()
+            send_bool(left, right, up, down)
         case "Key.up":
             up = 1
-            update()
+            send_bool(left, right, up, down)
         case "Key.down":
             down = 1
-            update()
+            send_bool(left, right, up, down)
 
 def on_release(key):
     global left, right, up, down
     match str(key).replace("'", ""):
         case "Key.right":
             right = 0
-            update()
+            send_bool(left, right, up, down)
         case "Key.left":
             left = 0
-            update()
+            send_bool(left, right, up, down)
         case "Key.up":
             up = 0
-            update()
+            send_bool(left, right, up, down)
         case "Key.down":
             down = 0
-            update()
+            send_bool(left, right, up, down)
 
 
 
