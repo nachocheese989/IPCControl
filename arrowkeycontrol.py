@@ -37,18 +37,18 @@ def main():
         dim = (width, height)
         frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
         cv2.imshow('Capturing, Q to quit',frame)
+        #cheap fix to opencv freezing when a key is held
         do_stop = False
         while True:
             key = cv2.waitKey(1)
-            if key == -1: # no keycode reported
-                break # inner loop
+            if key == -1: 
+                break
             if key == ord('q'):
-                do_stop = True # break outer loop
-                # don't break inner loop yet, we'll do that in the next iteration when no keycode is reported
-
+                do_stop = True
+                
         if do_stop:
             break
-        print("tick")
+        
     cap.release()
     cv2.destroyAllWindows()
 
