@@ -1,2 +1,2 @@
-.pyc
-.cpython
+.pyc*
+.cpython*
