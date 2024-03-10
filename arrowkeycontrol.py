@@ -1,54 +1,56 @@
 import stream
-from pynput.keyboard import Listener
 from command import *
+import keyboard
+import cv2
 
-STREAM_URL = "http://admin:123456@192.168.1.15:80/videostream.cgi"
-left=0
-right=0
-up=0
-down=0
+def main():
+    s = 3
+    left=0
+    right=0
+    up=0
+    down=0
+    p_left = 0
+    p_right = 0
+    p_up = 0
+    p_down = 0
+    cap = cv2.VideoCapture(stream.STREAM_URL)
+    while True:
+        if keyboard.is_pressed("w"):
+            s = max(min(s+1, 10), 0)
+            set_pt_rate(s)
+        if keyboard.is_pressed("s"):
+            s = max(min(s-1, 10), 0)
+            set_pt_rate(s)
+        left = keyboard.is_pressed("left")
+        right = keyboard.is_pressed("right")
+        up = keyboard.is_pressed("up")
+        down = keyboard.is_pressed("down")
+        if left != p_left or right != p_right or up != p_up or down != p_down:
+            send_bool(left, right, up, down)
+        p_left = left
+        p_right = right
+        p_up = up
+        p_down = down
+        ret, frame = cap.read()
+        width = 1500
+        height = 1080
+        dim = (width, height)
+        frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+        cv2.imshow('Capturing, Q to quit',frame)
+        do_stop = False
+        while True:
+            key = cv2.waitKey(1)
+            if key == -1: # no keycode reported
+                break # inner loop
+            if key == ord('q'):
+                do_stop = True # break outer loop
+                # don't break inner loop yet, we'll do that in the next iteration when no keycode is reported
 
-def on_press(key):
-    global left, right, up, down
-    if str(key).replace("'", "") == "q":
-        listener.stop()
-    if str(key).replace("'", "") == "e":
-        send(11)
-    match str(key).replace("'", ""):
-        case "Key.right":
-            right = 1
-            send_bool(left, right, up, down)
-        case "Key.left":
-            left = 1
-            send_bool(left, right, up, down)
-        case "Key.up":
-            up = 1
-            send_bool(left, right, up, down)
-        case "Key.down":
-            down = 1
-            send_bool(left, right, up, down)
+        if do_stop:
+            break
+        print("tick")
+    cap.release()
+    cv2.destroyAllWindows()
 
-def on_release(key):
-    global left, right, up, down
-    match str(key).replace("'", ""):
-        case "Key.right":
-            right = 0
-            send_bool(left, right, up, down)
-        case "Key.left":
-            left = 0
-            send_bool(left, right, up, down)
-        case "Key.up":
-            up = 0
-            send_bool(left, right, up, down)
-        case "Key.down":
-            down = 0
-            send_bool(left, right, up, down)
-
-
-
-
-listener = Listener(on_press=on_press, on_release=on_release)
-listener.start()
-stream.stream()
-listener.stop()
-# listener.join()
+if __name__ == "__main__":
+    main()

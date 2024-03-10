@@ -1,6 +1,7 @@
 import requests
 from copy import deepcopy
 
+
 STOP = 1
 DOWN = 0
 UP = 2
@@ -82,3 +83,17 @@ def send_bool(l: bool, r: bool, u: bool, d: bool, debug=False) -> None:
             if right: send(RIGHT, debug)
             if up: send(UP, debug)
             if down: send(DOWN, debug)
+
+def send_vec(vec:tuple[int], debug = False) -> None:
+    """
+    Send a vector to the camera. The vector is a tuple of two numbers, (x, y)
+    """
+    l = 0
+    r = 0
+    u = 0
+    d = 0
+    if vec[0] > 0: r = 1
+    if vec[0] < 0: l = 1
+    if vec[1] > 0: u = 1
+    if vec[1] < 0: d = 1
+    send_bool(l, r, u, d, debug)

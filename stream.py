@@ -17,5 +17,13 @@ def stream():
     cap.release()
     cv2.destroyAllWindows()
 
+def get_frame(cap) -> tuple[bool, cv2.VideoCapture]:
+    ret, frame = cap.read()
+    width = 1500
+    height = 1080
+    dim = (width, height)
+    frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+    return ret, frame
+
 if __name__ == "__main__":
     stream()
