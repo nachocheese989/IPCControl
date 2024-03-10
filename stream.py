@@ -10,9 +10,12 @@ def stream():
         height = 1080
         dim = (width, height)
         frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
-        cv2.imshow('Capturing',frame)
+        cv2.imshow('Capturing, Q to quit',frame)
         
         if cv2.waitKey(1) & 0xFF == ord('q'): #click q to stop capturing
             break
     cap.release()
     cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    stream()
