@@ -1,0 +1,14 @@
+http://admin:123456@192.168.1.15/set_misc.cgi?led_mode=1&ptz_disable_preset=1&ptz_patrol_h_rounds=1&ptz_patrol_v_rounds=1&ptz_patrol_rate=1&ptz_patrol_up_rate=5&ptz_patrol_down_rate=5&ptz_patrol_left_rate=5&ptz_patrol_right_rate=5
+
+http://admin:123456@192.168.1.15/decoder_control.cgi?command={c}
+
+http://admin:123456@192.168.1.15/
+
+1=STOP
+
+0-6, even numbers = down, up, right, left
+
+right down=90
+left down=91
+right up=92
+left up=93
