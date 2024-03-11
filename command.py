@@ -1,6 +1,5 @@
 import requests
-from copy import deepcopy
-
+from utils import CAMURL
 
 STOP = 1
 DOWN = 0
@@ -12,9 +11,9 @@ LEFT_DOWN = 91
 RIGHT_UP = 92
 LEFT_UP = 93
 
-COMMAND_URL="http://admin:123456@192.168.1.15/decoder_control.cgi"
+COMMAND_URL = CAMURL+"decoder_control.cgi"
 
-SETTINGS_URL = "http://admin:123456@192.168.1.15/set_misc.cgi"
+SETTINGS_URL = CAMURL+"set_misc.cgi"
 
 def change_settings(settings, debug = False) -> None:
     """
@@ -26,7 +25,7 @@ def change_settings(settings, debug = False) -> None:
     else:
         requests.get(url=SETTINGS_URL, params=settings)
 
-def send(c:int=1, debug = False) -> None:
+def send(c:int=1, url:str=COMMAND_URL, debug:bool=False) -> None:
     """
     Sends the command 'c' to the camera.
     Prints camera response if debug is True
@@ -39,7 +38,7 @@ def send(c:int=1, debug = False) -> None:
 def stop():
     send(STOP)
 
-def set_pt_rate(rate:int, debug = False):
+def set_pt_rate(rate:int, url:str=SETTINGS_URL, debug:bool=False):
     """
     Set the pan/tilt speed to an int between 0 and 10. Prints camera response if debug is True.
     """
@@ -52,14 +51,14 @@ def set_pt_rate(rate:int, debug = False):
         requests.get(url=SETTINGS_URL, params={"ptz_patrol_rate": r})
 
 
-def send_bool(l: bool, r: bool, u: bool, d: bool, debug=False) -> None:
+def send_bool(l:bool, r:bool, u:bool, d:bool, url:str=COMMAND_URL, debug:bool=False) -> None:
     """
     Convert four directions (e.g, arrow keys) to a command, then send it to the camera
     """
-    left = deepcopy(l)
-    right = deepcopy(r)
-    up = deepcopy(u)
-    down = deepcopy(d)
+    left = l
+    right = r
+    up = u
+    down = d
     if left and right:
         left = 0
         right = 0
@@ -68,21 +67,21 @@ def send_bool(l: bool, r: bool, u: bool, d: bool, debug=False) -> None:
         down = 0
     
     if left == 0 and right == 0 and up == 0 and down == 0:
-        send(STOP)
+        send(STOP, url, debug)
     else:
         if right and down:
-            send(RIGHT_DOWN, debug)
+            send(RIGHT_DOWN,url,  debug)
         elif left and down:
-            send(LEFT_DOWN, debug)
+            send(LEFT_DOWN, url, debug)
         elif right and up:
-            send(RIGHT_UP, debug)
+            send(RIGHT_UP, url, debug)
         elif left and up:
-            send(LEFT_UP, debug)
+            send(LEFT_UP, url, debug)
         else:
-            if left: send(LEFT, debug)
-            if right: send(RIGHT, debug)
+            if left: send(LEFT, url, debug)
+            if right: send(RIGHT, url, debug)
             if up: send(UP, debug)
-            if down: send(DOWN, debug)
+            if down: send(DOWN, url, debug)
 
 def send_vec(vec:tuple[int], debug = False) -> None:
     """

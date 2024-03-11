@@ -8,11 +8,10 @@ import cv2
 from stream import get_frame, STREAM_URL
 from command import set_pt_rate, send_vec
 from utils import vec2
+import time
 
 def main():
-    if not xi.get_connected()[0]:
-        while not xi.get_connected()[0]: print("Please connect a controller")
-        print("Controller connected")
+    connect_controller()
     cap = cv2.VideoCapture(STREAM_URL)
     p_v = vec2(0, 0)
     s = 2
@@ -46,6 +45,27 @@ def main():
     cap.release()
     cv2.destroyAllWindows()
     print("end")
+
+def connect_controller():
+    if not xi.get_connected()[0]:
+        print("Please connect a controller")
+        while not xi.get_connected()[0]: time.sleep(1)
+    print("Controller connected")
+
+def joy_control(speedup:str='w', slowdown:str='s', s:int=3) -> tuple[int, bool]:
+    if not xi.get_connected()[0]: print("Controller Disconnected"); return s, True
+    if keyboard.is_pressed(speedup):
+        s = max(min(s+1, 10), 0)
+        set_pt_rate(s)
+    if keyboard.is_pressed(slowdown):
+        s = max(min(s-1, 10), 0)
+        set_pt_rate(s)
+    state = xi.get_state(0)
+    vec: vec2 = vec2.from_tup(xi.get_thumb_values(state)[0])
+    send_vec(vec.r().t())
+    return s, False
+
+
 
 if __name__ == "__main__":
     main()
