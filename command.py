@@ -83,7 +83,7 @@ def send_bool(l:bool, r:bool, u:bool, d:bool, url:str=COMMAND_URL, debug:bool=Fa
             if up: send(UP, debug)
             if down: send(DOWN, url, debug)
 
-def send_vec(vec:tuple[int], debug = False) -> None:
+def send_vec(vec:tuple[int, int], debug = False) -> None:
     """
     Send a vector to the camera. The vector is a tuple of two numbers, (x, y)
     """
