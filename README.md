@@ -4,7 +4,7 @@ I hate this camera.
 
 ## Installation
 
-```console
+```text
 cd <wherever you want>
 git clone https://github.com/nachocheese989/IPCControl
 ```
