@@ -70,7 +70,7 @@ def send_bool(l:bool, r:bool, u:bool, d:bool, url:str=COMMAND_URL, debug:bool=Fa
         send(STOP, url, debug)
     else:
         if right and down:
-            send(RIGHT_DOWN,url,  debug)
+            send(RIGHT_DOWN, url,  debug)
         elif left and down:
             send(LEFT_DOWN, url, debug)
         elif right and up:
@@ -83,7 +83,7 @@ def send_bool(l:bool, r:bool, u:bool, d:bool, url:str=COMMAND_URL, debug:bool=Fa
             if up: send(UP, debug)
             if down: send(DOWN, url, debug)
 
-def send_vec(vec:tuple[int, int], debug = False) -> None:
+def send_vec(vec:tuple[int, int], url:str=COMMAND_URL, debug = False) -> None:
     """
     Send a vector to the camera. The vector is a tuple of two numbers, (x, y)
     """
@@ -95,4 +95,4 @@ def send_vec(vec:tuple[int, int], debug = False) -> None:
     if vec[0] < 0: l = 1
     if vec[1] > 0: u = 1
     if vec[1] < 0: d = 1
-    send_bool(l, r, u, d, debug)
+    send_bool(l, r, u, d, url, debug)
