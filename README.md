@@ -15,4 +15,5 @@ git clone https://github.m/nachocheese989/IPCControl
 ```
 
 That's it. No installation needed.
-You can access it by putting the IPControl.py path in you PYTHONPATH env variable, or by putting the IPCControl directory in you project directory, then importing it as ```python import IPCControl.IPConrol```
+You can access it by putting the IPControl.py path in you PYTHONPATH env variable and importing it as ```python import IPCControl```.
+More simply you can the IPCControl directory in you project directory, then importing it as ```python import IPCControl.IPCConrol```
