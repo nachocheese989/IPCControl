@@ -9,15 +9,13 @@ just `pip install` them.
 
 ## Installation
 
-    ```text
     cd <where its going>
-    git clone https://github.m/nachocheese989/IPCControl
-    ```
+    git clone https://github.com/nachocheese989/IPCControl
 
-    That's it.
-    You can access it by putting the IPControl.py path in you PYTHONPATH env variable and importing it as ```python import IPCControl```.
-    More simply you can the IPCControl directory in you project directory, then importing it as ```python import IPCControl.IPCConrol```
+That's it.
+You can access it by putting the IPControl.py path in you PYTHONPATH env variable and importing it as ```python import IPCControl```.
+More simply you can put the IPCControl directory in you project directory, then importing it as ```python import IPCControl.IPCConrol```
 
 ## Usage
 
-    The docs in the python files explain it. run IPCControl.py, changing the url to your cameras ip for an example function.
+The docs in the python files explain it. Run IPCControl.py, changing the url to your cameras ip for an example.
