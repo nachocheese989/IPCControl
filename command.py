@@ -15,13 +15,13 @@ COMMAND_URL = CAMURL+"decoder_control.cgi"
 
 SETTINGS_URL = CAMURL+"set_misc.cgi"
 
-def change_settings(settings, debug = False) -> None:
+def change_settings(settings, url:str=COMMAND_URL, debug:bool=False) -> None:
     """
     Change misc settings (Advanced>Other Settings from normal web view)
     """
     if debug:
         print("settings: ", settings)
-        print("response: ", requests.get(url=SETTINGS_URL, params=settings))
+        print("response: ", requests.get(url=url, params=settings))
     else:
         requests.get(url=SETTINGS_URL, params=settings)
 
@@ -31,9 +31,9 @@ def send(c:int=1, url:str=COMMAND_URL, debug:bool=False) -> None:
     Prints camera response if debug is True
     """
     if debug: 
-        print("response: ", requests.get(url=COMMAND_URL, params={"command":c}))
+        print("response: ", requests.get(url=url, params={"command":c}))
     else:
-        requests.get(url=COMMAND_URL, params={"command":c})
+        requests.get(url=url, params={"command":c})
 
 def stop():
     send(STOP)
@@ -46,9 +46,9 @@ def set_pt_rate(rate:int, url:str=SETTINGS_URL, debug:bool=False):
         print("pt rate should be between 0 and 10, value has been clamped.")
     r = max(min(10-round(rate), 10), 0)
     if debug:
-        print("response: ", requests.get(url=SETTINGS_URL, params={"ptz_patrol_rate": r}))
+        print("response: ", requests.get(url=url, params={"ptz_patrol_rate": r}))
     else:
-        requests.get(url=SETTINGS_URL, params={"ptz_patrol_rate": r})
+        requests.get(url=url, params={"ptz_patrol_rate": r})
 
 
 def send_bool(l:bool, r:bool, u:bool, d:bool, url:str=COMMAND_URL, debug:bool=False) -> None:
