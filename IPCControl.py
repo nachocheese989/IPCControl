@@ -26,11 +26,11 @@ import command
 import stream
 import utils
 import keycontrol
-platform = platform.system()
+plat = platform.system()
 if platform == "Windows":
     import joystick
 
-
+print(plat)
 class SWADS440:
     """
     A class to control the SWADS-440 camera.\n
@@ -70,32 +70,8 @@ class SWADS440:
         A basic stream of the camera, no controls.
         """
         stream.stream(self.scaling, self.esc_key)
-    def keyboard_stream(self):
-        """
-        Control the camera with the keyboard, with stream.
-        """
-        cap = stream.videocapture(self.stream_url)
-        p_left = 0
-        p_right = 0
-        p_up = 0
-        p_down = 0
-        while True:
-            self.speed, p_left, p_right, p_up, p_down = keycontrol.processkeys(self.left, self.right, self.up, self.down, self.speedup, self.slowdown, self.speed, p_left, p_right, p_up, p_down)
-            frame = stream.get_frame(cap, self.scaling)
-            if stream.render_frame(frame, self.esc_key): break
-        stream.destroy(cap)
-    def keyboard_control(self):
-        """
-        Control the camera with the keyboard, no stream.
-        """
-        p_left = 0
-        p_right = 0
-        p_up = 0
-        p_down = 0
-        while True:
-            if keyboard.is_pressed(self.esc_key): break
-            self.speed, p_left, p_right, p_up, p_down = keycontrol.processkeys(self.left, self.right, self.up, self.down, self.speedup, self.slowdown, self.speed, p_left, p_right, p_up, p_down)
-    if platform == "Windows":
+    
+    if plat == "Windows":
         def joystick_stream(self):
             """
             Control the camera with an xbox controller and show the camera stream (windows only).
@@ -115,6 +91,33 @@ class SWADS440:
             while True:
                 if keyboard.is_pressed(self.esc_key): break
                 self.speed = joystick.joy_control(self.speedup, self.slowdown, self.speed)
+    if plat != "Darwin":
+        def keyboard_stream(self):
+            """
+            Control the camera with the keyboard, with stream.
+            """
+            cap = stream.videocapture(self.stream_url)
+            p_left = 0
+            p_right = 0
+            p_up = 0
+            p_down = 0
+            while True:
+                self.speed, p_left, p_right, p_up, p_down = keycontrol.processkeys(self.left, self.right, self.up, self.down, self.speedup, self.slowdown, self.speed, p_left, p_right, p_up, p_down)
+                frame = stream.get_frame(cap, self.scaling)
+                if stream.render_frame(frame, self.esc_key): break
+            stream.destroy(cap)
+        def keyboard_control(self):
+            """
+            Control the camera with the keyboard, no stream.
+            """
+            p_left = 0
+            p_right = 0
+            p_up = 0
+            p_down = 0
+            while True:
+                if keyboard.is_pressed(self.esc_key): break
+                self.speed, p_left, p_right, p_up, p_down = keycontrol.processkeys(self.left, self.right, self.up, self.down, self.speedup, self.slowdown, self.speed, p_left, p_right, p_up, p_down)
+
     def code_bool_control(self, left:bool=False, right:bool=False, up:bool=False, down:bool=False):
         """
         Control the camera with code, no stream.\n
