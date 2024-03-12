@@ -14,8 +14,7 @@ def stream(scaling=2, esc_key:str='q'):
     """
     cap = cv2.VideoCapture(STREAM_URL)
     while True:
-        ret, frame = get_frame(cap, scaling)
-        if not ret: raise CameraError("Uh oh. The camera didn't return an image!")
+        frame = get_frame(cap, scaling)
         if render_frame(frame, esc_key): break
     cap.release()
     cv2.destroyAllWindows()
