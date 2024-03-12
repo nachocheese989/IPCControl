@@ -3,9 +3,20 @@
 I hate this camera.
 
 Dependencies:
-    platform, sys, math, xinput-python, time, keyboard, opencv-python, requests
+    pynput, xinput-python (windows only), keyboard, opencv-python, requests, pynput, sys, math, time
 
-just `pip install` them.
+just `pip install` them manually, or copy/paste the below into a .txt file and run `pip install -r <path_to_file>`:
+```
+pynput
+xinput-python
+keyboard
+opencv-python
+requests
+pynput
+sys
+math
+time
+```
 
 ## Installation
 
@@ -13,8 +24,8 @@ just `pip install` them.
     git clone https://github.com/nachocheese989/IPCControl
 
 That's it.
-You can access it by putting the IPControl.py path in you PYTHONPATH env variable (I think?) and importing it as ```import IPCControl```.
-More simply you can put the IPCControl directory in you project directory, then importing it as ```import IPCControl.IPCConrol```
+You can access it by putting the IPControl.py path in you PYTHONPATH env variable (I think?) and importing it as `import IPCControl`.
+More simply you can put the IPCControl directory in you project directory, then importing it as `import IPCControl.IPCConrol`
 
 ## Usage
 
