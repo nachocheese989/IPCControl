@@ -1,3 +1,6 @@
+"""
+Arrow key control for MacOS, the keyboard.is_pressed() requires admin priveleges while pynput doesn't
+"""
 import stream
 from pynput.keyboard import Listener
 from command import *
